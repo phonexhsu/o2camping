@@ -1,0 +1,23 @@
+{
+  "rules": {
+    // ".read": true,
+    // ".write": false,
+    "users": {
+      ".indexOn": "ID",
+      "$uid": {
+        ".validate": "$uid === auth.uid",
+        // grants write access to the owner of this user account
+        // whose uid must exactly match the key ($uid)
+        ".write": "$uid === auth.uid",
+        ".read": "auth != null && auth.uid == $uid"
+      }
+    },
+    "notes": {
+      ".indexOn": "uid",
+        ".read" : "data.child(auth.uid).exists()",
+      "$uid": {
+        ".write": "$uid == auth.uid",
+      }
+    }
+  }
+}
